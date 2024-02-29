@@ -1,0 +1,94 @@
+PHASE 1 - Task - 1 : Analyze Customer Behavior based on Transaction Data
+1.Explore the data
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+# Load the dataset
+dataset = "/content/Hackathon_Ideal_Data.csv"
+df = pd.read_csv(dataset)
+
+2. Exploratory Data Analysis (EDA)
+
+# Overview of Transactions
+plt.figure(figsize=(8,4))
+sns.histplot(df['QTY'], bins=30, kde=True)
+plt.title('Distribution of Quantity')
+plt.show()
+
+plt.figure(figsize=(8,4))
+sns.histplot(df['VALUE'], bins=30, kde=True)
+plt.title('Distribution of Transaction Value')
+plt.show()
+     
+
+
+# Customer Preferences
+top_categories = df['GRP'].value_counts().head(10)
+plt.figure(figsize=(8,4))
+top_categories.plot(kind='bar')
+plt.title('Top 10 Product Categories')
+plt.xlabel('Product Categories')
+plt.ylabel('Number of Transactions')
+plt.show()
+     
+
+
+top_brands = df['BRD'].value_counts().head(10)
+plt.figure(figsize=(8,4))
+top_brands.plot(kind='bar')
+plt.title('Top 10 Brands')
+plt.xlabel('Brands')
+plt.ylabel('Number of Transactions')
+plt.show()
+     
+
+
+# Purchasing Patterns
+monthly_trends = df.groupby('MONTH')['VALUE'].sum()
+plt.figure(figsize=(8,4))
+monthly_trends.plot(kind='line', marker='o')
+plt.title('Monthly Transaction Trends')
+plt.xlabel('Month')
+plt.ylabel('Total Transaction Value')
+plt.show()
+     
+
+
+# Customer Loyalty
+store_engagement = df['STORECODE'].value_counts()
+plt.figure(figsize=(8,4))
+store_engagement.plot(kind='bar')
+plt.title('Store Engagement')
+plt.xlabel('Store Code')
+plt.ylabel('Number of Transactions')
+plt.show()
+     
+
+3. Data Visualization
+
+# Correlation Matrix
+correlation_matrix = df.corr()
+plt.figure(figsize=(8,4))
+sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm', fmt=".2f")
+plt.title('Correlation Matrix')
+plt.show()
+
+4. Feature Engineering
+
+# Creating a new feature for average spending per transaction
+df['AVG_SPENDING'] = df['VALUE'] / df['QTY']
+     
+5. Correlation Analysis
+
+# Explore correlations between numerical variables
+correlation_matrix = df.corr()
+print(correlation_matrix
+
+6. Conclusion and Insights
+
+# Print or display relevant findings based on the analysis
+print("Top 5 product categories:", df['GRP'].value_counts().head())
+     
+7. Documentation and Reporting
+
+df.to_csv('cleaned_dataset.csv', index=False)
