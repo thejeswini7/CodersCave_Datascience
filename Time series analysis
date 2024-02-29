@@ -1,0 +1,81 @@
+PHASE 1 - Additional Task : Choose a dataset with a time component and perform time series analysis
+import numpy as np
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# Load the dataset
+dataset = "/content/long_data_.csv"
+df = pd.read_csv(dataset)
+df.head(7)
+
+df.describe()
+
+df.info()
+
+# Separate datetime to Date and Time
+df['Dates'] = pd.to_datetime(df['Dates'], format='%d/%m/%Y %H:%M:%S')
+df['New_Date'] = df['Dates'].dt.date
+df.head()
+
+df['New_time']=pd.to_datetime (df['Dates']).dt.time
+df1=df
+df.head()
+
+df1['year'] = pd.DatetimeIndex(df1['New_Date']).year
+df1.head()
+
+df['Regions'].unique()
+array(['NR', 'WR', 'SR', 'ER', 'NER'], dtype=object)
+# Max and Min of Power consumption
+df1[df1['Usage']== df['Usage'].max()]
+
+df1[df1['Usage']== df['Usage'].min()]
+
+df1['New_Date'].unique()
+
+df1[df1['New_Date']==2019].nunique()
+
+df1[df1['New_Date']==2020].nunique()
+
+df1['year'].unique()
+array([2019, 2020])
+df1[df1['year']==2019].nunique()
+
+df1[df1['year']==2020].nunique()
+
+print(df.shape)
+df['Usage'].value_counts()
+
+count_df = pd.DataFrame(df['year'].value_counts())
+count_df
+year
+2019	11847
+2020	4752
+print(df.shape)
+df['Dates'].value_counts()
+
+print(df.shape)
+df['year'].value_counts()
+
+plt.figure(figsize = (8,4))
+sns.barplot(x = 'year',y='Usage',data=df)
+
+plt.figure(figsize = (8,4))
+sns.barplot(x = 'Regions',y='Usage',data=df)
+<Axes: xlabel='Regions', ylabel='Usage'>
+
+plt.figure(figsize = (10,4))
+sns.barplot(x = 'States',y='Usage',data=df)
+plt.xticks(rotation=90)
+
+sns.jointplot(x=df1['year'],y=df1['Usage'],data=df1,kind='kde')
+<seaborn.axisgrid.JointGrid at 0x7b99a5206b30>
+
+CONCLUSION
+
+sns.lineplot(x=df1['Dates'] ,y=df1['Usage'],data=df1)
+<Axes: xlabel='Dates', ylabel='Usage'>
+
+sns.jointplot(x=df1['Dates'],y=df1['Usage'],data=df1,kind='kde')
+plt.xticks(rotation =90)
